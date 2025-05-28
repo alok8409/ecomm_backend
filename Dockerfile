@@ -3,7 +3,7 @@ FROM maven:3.8.4-openjdk-17 AS build
 
 WORKDIR /app
 
-# Copy all project files
+# Copy all project files to container
 COPY . .
 
 # Build the project using Maven
@@ -17,8 +17,8 @@ WORKDIR /app
 # Copy the JAR from the previous build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose port
-EXPOSE 8080
+# Match this with the port in application.properties
+EXPOSE 5454
 
-# Run the application
+# Start the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
